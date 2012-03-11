@@ -1,0 +1,56 @@
+#!/usr/bin/python
+import argparse
+
+SENSITIVITY_PATH = '/sys/devices/platform/i8042/serio1/serio2/sensitivity'
+SPEED_PATH = '/sys/devices/platform/i8042/serio1/serio2/speed'
+
+def set_speed(speed):
+    """Set the speed of the trackpoint.
+
+    Arguments:
+    speed - speed value
+    """
+    f = open(SPEED_PATH, 'r+')
+    f.write(speed)
+    f.close()
+
+def set_sensitivity(sensitivity):
+    """Set the sensitivity of the trackpoint.
+
+    Arguments:
+    sensitivity - sensitivity value
+    """
+    f = open(SENSITIVITY_PATH, 'r+')
+    f.write(sensitivity)
+    f.close()
+
+def show_settings():
+    """Show the current trackpoint settings."""
+    settings = [(SENSITIVITY_PATH, 'sensitivity'), (SPEED_PATH, 'speed')]
+    print 'Trackpoint settings:'
+    for x in settings:
+        f = open(x[0], 'r')
+        print '%s: %s' % (x[1], f.read().strip())
+        f.read()
+        f.close()
+
+
+def main():
+    d = 'Set the sensitivity and/or speed of the trackpoint.'
+    parser = argparse.ArgumentParser(description=d)
+    parser.add_argument('-s', action='store', dest='sensitivity', help='set sensitivity')
+    parser.add_argument('-p', action='store', dest='speed', help='set speed')
+    parser.add_argument('-k', action='store_true', dest='settings',
+                        default=False, help='set current settings')
+    args = parser.parse_args()
+    
+    if args.settings:
+        show_settings()
+    elif args.sensitivity:
+        set_sensitivity(args.sensitivity)
+    elif args.speed:
+        set_speed(args.speed)
+
+
+if __name__ == '__main__':
+    main()
