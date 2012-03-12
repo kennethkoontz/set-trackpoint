@@ -10,7 +10,11 @@ def set_speed(speed):
     Arguments:
     speed - speed value
     """
-    f = open(SPEED_PATH, 'r+')
+    try: 
+        f = open(SPEED_PATH, 'r+')
+    except IOError as e:
+        print 'E: Can not open %s. Do you have root permissions?' % repr(e.filename)
+        return 
     f.write(speed)
     f.close()
 
@@ -20,7 +24,11 @@ def set_sensitivity(sensitivity):
     Arguments:
     sensitivity - sensitivity value
     """
-    f = open(SENSITIVITY_PATH, 'r+')
+    try: 
+        f = open(SENSITIVITY_PATH, 'r+')
+    except IOError as e:
+        print 'E: Can not open %s. Do you have root permissions?' % repr(e.filename)
+        return 
     f.write(sensitivity)
     f.close()
 
