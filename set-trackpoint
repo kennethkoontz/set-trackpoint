@@ -46,9 +46,9 @@ def main():
     
     if args.settings:
         show_settings()
-    elif args.sensitivity:
+    if args.sensitivity:
         set_sensitivity(args.sensitivity)
-    elif args.speed:
+    if args.speed:
         set_speed(args.speed)
 
 
